@@ -1,0 +1,19 @@
+# Data files - too big for GitHub
+data/
+*.csv
+*.parquet
+*.pkl
+
+# Trained Models
+models/
+*.joblib
+*.h5
+*.pkl
+
+# Python
+__pycache__/
+.venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
