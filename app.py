@@ -1,0 +1,121 @@
+import streamlit as st
+import joblib
+import shap
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings('ignore')
+
+
+st.title("Credit Default Risk scorer")
+st.markdown("### Enter application details. Model explains decline reasons for SARB compliance.")
+
+st.markdown('#### Income')
+INCOME1= st.number_input('Primary Annual income', min_value=0.01, max_value=50000000.00, step=5000.0)
+INCOME2= st.number_input('Other annual income', min_value=0.00, max_value=1000000000.00, step=5000.0)
+
+st.markdown('#### Expenditure')
+EXPENDITURE1= st.slider('Amount spent on grossery', min_value=0.00, max_value=30000.00, step=10.00)
+EXPENDITURE2= st.slider('Amount spent on Water and Electricity', min_value=0.00, max_value=30000.00, step=10.00)
+EXPENDITURE3= st.slider('Amount spent on transport ', min_value=0.00, max_value=30000.00, step=10.0)
+EXPENDITURE4= st.slider('Amount spent on Education', min_value=0.00, max_value=30000.00, step=10.0)
+EXPENDITURE5= st.slider('Amount spent on airtime and data', min_value=0.00, max_value=10000.00, step=10.0)
+EXPENDITURE6= st.slider('Amount spent on other loans', min_value=0.00, max_value=100000.00, step=10.0)
+EXPENDITURE7= st.slider('Amount spent on Others eg intertainment', min_value=0.00, max_value=30000.00, step=10.0)
+
+st.markdown('#### Investments')
+INVESTMENT1= st.number_input('Amount invested in shares', min_value=0.00, max_value=1000000.00, step=5.0)
+INVESTMENT2= st.number_input('Amount invested in retirement annuity', min_value=0.00, max_value=1000000.00, step=5.0)
+INVESTMENT3= st.number_input('Amount invested in other investments', min_value=0.00, max_value=1000000.00, step=5.0)
+
+st.markdown('#### Credit ')
+AMT_CREDIT=st.number_input('Credit_Amount',min_value=0.00, max_value=100000000.00, step=10.0)
+
+st.markdown('#### Bureau Status')
+BUREAU_DAYS_CREDIT_MIN=st.slider('BUREAU_DAYS_CREDIT_MIN',min_value=-3000, max_value=0, step=1)
+BUREAU_DAYS_CREDIT_MAX=st.slider('BUREAU_DAYS_CREDIT_MAX',min_value=-3000, max_value=0, step=1)
+BUREAU_CREDIT_ACTIVE=st.slider('BUREAU CREDIT ACTIVE STATUS',min_value=0, max_value=50, step=1)
+TOTAL_BUREAU_CREDIT_DAY_OVERDUE=st.number_input('TOTAL_BUREAU_CREDIT_DAY_OVERDUE',min_value=0, max_value=1050, step=1)
+
+st.markdown('#### Previous Application History')
+NUMBER_OF_PAST_APPS=st.radio('NUMBER_OF_PAST_APP',options=[1,2,3,4,5,6,7,8,9,10],index=0)
+PREVIOUS_REFUSED_RATIO=st.number_input('PREVIOUS_REFUSED_RATIO',min_value=0.00, max_value=1.00, step=0.01)
+
+st.markdown('#### Applicant Age and Employment period')
+AGE=st.number_input('AGE',min_value=18, max_value=75, step=1)
+YEARS_EMPLOYED=st.slider("YEARS_EMPLOYED",min_value=0, max_value=45, step=1)
+
+st.markdown('#### EXT_SOURCE SCORES')
+
+EXT_SOURCE_1=st.number_input('EXT_SOURCE_1',min_value=0.00, max_value=1.0, step=0.01)
+EXT_SOURCE_2=st.number_input('EXT_SOURCE_2',min_value=0.00, max_value=1.0, step=0.01)
+EXT_SOURCE_3=st.number_input('EXT_SOURCE_3',min_value=0.00, max_value=1.0, step=0.01)
+
+#CODE_GENDER=st.radio('Select Your gender : Female=0;  Male=1 ;  XNA=2',options=[0,1,2],index=0)
+st.markdown('#### Number of children')
+CNT_CHILDREN=st.selectbox('NUMBER OF CHILDREN',options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],index=0)
+
+AMT_INCOME_TOTAL=(INCOME1+INCOME2)
+
+ANNUAL_INVESTMENTS_AMT=(INVESTMENT1+INVESTMENT2+INVESTMENT3)*12
+ANNUAL_TOTAL_EXPENDITURE=(EXPENDITURE1+EXPENDITURE2+EXPENDITURE3+EXPENDITURE4+EXPENDITURE5+EXPENDITURE6+EXPENDITURE7)*12
+AMT_ANNUITY=(ANNUAL_INVESTMENTS_AMT+ANNUAL_TOTAL_EXPENDITURE)
+
+DTI_RATIO=AMT_ANNUITY/AMT_INCOME_TOTAL
+CREDIT_TO_INCOME_RATIO=AMT_CREDIT/AMT_INCOME_TOTAL
+
+EXT_SOURCE_MEAN=(EXT_SOURCE_1+EXT_SOURCE_2+EXT_SOURCE_3)/3
+
+
+
+model=joblib.load('c:/Users/Home/model_xgb.pkl')
+feature_names=['DTI_RATIO','CREDIT_TO_INCOME_RATIO', 'BUREAU_DAYS_CREDIT_MIN', 'BUREAU_DAYS_CREDIT_MAX',
+          'BUREAU_CREDIT_ACTIVE', 'TOTAL_BUREAU_CREDIT_DAY_OVERDUE', 'NUMBER_OF_PAST_APPS',
+          'PREVIOUS_REFUSED_RATIO', 'YEARS_EMPLOYED', 'EXT_SOURCE_MEAN', 'AGE','CNT_CHILDREN']
+X_input=pd.DataFrame([[DTI_RATIO,CREDIT_TO_INCOME_RATIO, BUREAU_DAYS_CREDIT_MIN, BUREAU_DAYS_CREDIT_MAX,
+          BUREAU_CREDIT_ACTIVE, TOTAL_BUREAU_CREDIT_DAY_OVERDUE, NUMBER_OF_PAST_APPS,
+          PREVIOUS_REFUSED_RATIO, YEARS_EMPLOYED, EXT_SOURCE_MEAN, AGE,CNT_CHILDREN]],columns=feature_names)
+
+explainer = shap.TreeExplainer(model,X_input)
+shap_values = explainer.shap_values(X_input)
+
+plt.figure()
+exp=shap.Explanation(
+        values=shap_values[0],
+        base_values=explainer.expected_value,
+        data=X_input.iloc[0],
+        feature_names=feature_names)
+shap.waterfall_plot(exp,max_display=13,show=False)
+    
+        
+st.pyplot(plt.gcf())
+plt.clf()
+
+if st.button("Score"):
+    Threshold=0.187
+    prob=model.predict_proba([[DTI_RATIO,CREDIT_TO_INCOME_RATIO, BUREAU_DAYS_CREDIT_MIN, BUREAU_DAYS_CREDIT_MAX,
+          BUREAU_CREDIT_ACTIVE, TOTAL_BUREAU_CREDIT_DAY_OVERDUE, NUMBER_OF_PAST_APPS,
+          PREVIOUS_REFUSED_RATIO, YEARS_EMPLOYED, EXT_SOURCE_MEAN, AGE,CNT_CHILDREN]])[0,1]
+    st.metric(
+        label="Probability of Default",
+        value=f"{prob:.2%}",
+        delta="-Low Risk" if prob < Threshold  else "High Risk",
+        delta_color="inverse" if prob < Threshold else "normal"
+    )
+
+    if prob<Threshold:
+
+        st.success("The loan is approved")
+    elif prob<0.3:
+        st.success("Low risk of default. Credit profile looks good. Manual verification is reccomended")
+        
+        with st.expander("**Top reasons for score**"):
+            st.write("1. Low exteranal source mean score")
+            st.write("2. High DEBT TO INCOME RATIO")
+            st.write("3. Low bureau score")
+            st.write("4. Unstable employment")
+    else:
+        st.error("High risk of default. Consider improving credit profile.")
+
+        
