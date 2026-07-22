@@ -67,9 +67,15 @@ CREDIT_TO_INCOME_RATIO=AMT_CREDIT/AMT_INCOME_TOTAL
 
 EXT_SOURCE_MEAN=(EXT_SOURCE_1+EXT_SOURCE_2+EXT_SOURCE_3)/3
 
+def load_models():
+    calibrated_model = joblib.load('src/XGB_Calibrated_Model.pkl') # for prediction
+    base_model = joblib.load('src/XGB_Model.pkl')             # for SHAP
+    feature_names = joblib.load('src/feature_names.pkl')
+    return calibrated_model, base_model, feature_names
 
+calibrated_model, base_model, feature_names = load_models()
 
-model=joblib.load('c:/Users/Home/model_xgb.pkl')
+Calibrated_model=joblib.load("C:/Users/Home/src/XGB_Calibrated_Model.pkl")
 feature_names=['DTI_RATIO','CREDIT_TO_INCOME_RATIO', 'BUREAU_DAYS_CREDIT_MIN', 'BUREAU_DAYS_CREDIT_MAX',
           'BUREAU_CREDIT_ACTIVE', 'TOTAL_BUREAU_CREDIT_DAY_OVERDUE', 'NUMBER_OF_PAST_APPS',
           'PREVIOUS_REFUSED_RATIO', 'YEARS_EMPLOYED', 'EXT_SOURCE_MEAN', 'AGE','CNT_CHILDREN']
@@ -77,24 +83,65 @@ X_input=pd.DataFrame([[DTI_RATIO,CREDIT_TO_INCOME_RATIO, BUREAU_DAYS_CREDIT_MIN,
           BUREAU_CREDIT_ACTIVE, TOTAL_BUREAU_CREDIT_DAY_OVERDUE, NUMBER_OF_PAST_APPS,
           PREVIOUS_REFUSED_RATIO, YEARS_EMPLOYED, EXT_SOURCE_MEAN, AGE,CNT_CHILDREN]],columns=feature_names)
 
-explainer = shap.TreeExplainer(model,X_input)
-shap_values = explainer.shap_values(X_input)
+# Prediction
+prediction = Calibrated_model.predict(X_input)
+prediction_proba = Calibrated_model.predict_proba(X_input)[:, 1]
+st.write(f"**Prediction:** {'Default Risk' if prediction[0] == 1 else 'No Default Risk'}")
+st.write(f"**Probability of Default:** {prediction_proba[0]:.2%}")
 
-plt.figure()
-exp=shap.Explanation(
+# SHAP Explanation - With a base model for SHAP values
+
+
+st.subheader("Feature Impact - SHAP Waterfall")
+
+try:
+    # 1. CREATE THE EXPLAINER FIRST
+    explainer = shap.TreeExplainer(base_model, feature_perturbation="interventional")
+    
+    # 2. GET SHAP VALUES
+    shap_values = explainer.shap_values(X_input)
+    
+    # Handle binary classification
+    if isinstance(shap_values, list):
+        shap_values = shap_values[1]
+        base_value = explainer.expected_value[1]
+    else:
+        base_value = explainer.expected_value
+
+    # 3. PLOT
+    plt.figure(figsize=(10,6))
+    exp = shap.Explanation(
         values=shap_values[0],
-        base_values=explainer.expected_value,
+        base_values=base_value,
         data=X_input.iloc[0],
         feature_names=feature_names)
-shap.waterfall_plot(exp,max_display=13,show=False)
     
-        
-st.pyplot(plt.gcf())
-plt.clf()
+    shap.waterfall_plot(exp, max_display=10, show=False)
+
+    # Fix the +0 label issue
+    ax = plt.gca()
+    for t in ax.texts:
+        txt = t.get_text()
+        if txt.startswith("+") or txt.startswith("-"):
+            try:
+                val = float(txt.replace("+","").replace("-",""))
+                t.set_text(f"{val:.3f}")
+            except: pass
+
+    plt.tight_layout()
+    st.pyplot(plt.gcf())
+    plt.clf()
+    
+except Exception as e:
+    st.error(f"SHAP Error: {e}")
+
+#except Exception as e:
+#   st.warning(f"SHAP plot skipped: {e}")
+#plt.clf()
 
 if st.button("Score"):
-    Threshold=0.187
-    prob=model.predict_proba([[DTI_RATIO,CREDIT_TO_INCOME_RATIO, BUREAU_DAYS_CREDIT_MIN, BUREAU_DAYS_CREDIT_MAX,
+    Threshold=0.32
+    prob=Calibrated_model.predict_proba([[DTI_RATIO,CREDIT_TO_INCOME_RATIO, BUREAU_DAYS_CREDIT_MIN, BUREAU_DAYS_CREDIT_MAX,
           BUREAU_CREDIT_ACTIVE, TOTAL_BUREAU_CREDIT_DAY_OVERDUE, NUMBER_OF_PAST_APPS,
           PREVIOUS_REFUSED_RATIO, YEARS_EMPLOYED, EXT_SOURCE_MEAN, AGE,CNT_CHILDREN]])[0,1]
     st.metric(
@@ -107,7 +154,7 @@ if st.button("Score"):
     if prob<Threshold:
 
         st.success("The loan is approved")
-    elif prob<0.3:
+    elif prob<0.4:
         st.success("Low risk of default. Credit profile looks good. Manual verification is reccomended")
         
         with st.expander("**Top reasons for score**"):
@@ -115,6 +162,9 @@ if st.button("Score"):
             st.write("2. High DEBT TO INCOME RATIO")
             st.write("3. Low bureau score")
             st.write("4. Unstable employment")
+    else:
+        st.error("High risk of default. Consider improving credit profile.")
+
     else:
         st.error("High risk of default. Consider improving credit profile.")
 
