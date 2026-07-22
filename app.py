@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings('ignore')
-@st.cache_resource
+
 
 st.title("Credit Default Risk scorer")
 st.markdown("### Enter application details. Model explains decline reasons for SARB compliance.")
@@ -67,6 +67,7 @@ CREDIT_TO_INCOME_RATIO=AMT_CREDIT/AMT_INCOME_TOTAL
 
 EXT_SOURCE_MEAN=(EXT_SOURCE_1+EXT_SOURCE_2+EXT_SOURCE_3)/3
 
+@st.cache_resource
 def load_models():
     calibrated_model = joblib.load('src/XGB_Calibrated_Model.pkl') # for prediction
     base_model = joblib.load('src/XGB_Model.pkl')             # for SHAP
