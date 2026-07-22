@@ -166,7 +166,4 @@ if st.button("Score"):
     else:
         st.error("High risk of default. Consider improving credit profile.")
 
-    else:
-        st.error("High risk of default. Consider improving credit profile.")
-
         
