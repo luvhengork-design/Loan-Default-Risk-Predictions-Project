@@ -70,7 +70,7 @@ EXT_SOURCE_MEAN=(EXT_SOURCE_1+EXT_SOURCE_2+EXT_SOURCE_3)/3
 @st.cache_resource
 def load_models():
     calibrated_model = joblib.load('src/XGB_Calibrated_Model.pkl') # for prediction
-    base_model = joblib.load('src/XGB_Model.pkl')             # for SHAP
+    base_model = joblib.load('src/XGB_Base_Model.pkl')             # for SHAP
     feature_names = joblib.load('src/feature_names.pkl')
     return calibrated_model, base_model, feature_names
 
