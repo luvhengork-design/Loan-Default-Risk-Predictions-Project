@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings('ignore')
-
+@st.cache_resource
 
 st.title("Credit Default Risk scorer")
 st.markdown("### Enter application details. Model explains decline reasons for SARB compliance.")
