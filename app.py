@@ -172,57 +172,6 @@ if st.button("Score"):
             st.write("3. Low bureau score")
             st.write("4. Unstable employment")
 
-    
-if st.button("Predict Risk"):
-    feature_names = [
-    'DTI_RATIO', 
-    'CREDIT_TO_INCOME_RATIO', 
-    'BUREAU_DAYS_CREDIT_MIN', 
-    'BUREAU_DAYS_CREDIT_MAX',
-    'BUREAU_CREDIT_ACTIVE', 
-    'TOTAL_BUREAU_CREDIT_DAY_OVERDUE', 
-    'NUMBER_OF_PAST_APPS',
-    'PREVIOUS_REFUSED_RATIO', 
-    'YEARS_EMPLOYED', 
-    'EXT_SOURCE_MEAN', 
-    'AGE', 
-    'CNT_CHILDREN'
-]
-input_data = {
-    'DTI_RATIO': DTI_RATIO,
-    'CREDIT_TO_INCOME_RATIO': CREDIT_TO_INCOME_RATIO,
-    'BUREAU_DAYS_CREDIT_MIN': BUREAU_DAYS_CREDIT_MIN,
-    'BUREAU_DAYS_CREDIT_MAX': BUREAU_DAYS_CREDIT_MAX,
-    'BUREAU_CREDIT_ACTIVE': BUREAU_CREDIT_ACTIVE,
-    'TOTAL_BUREAU_CREDIT_DAY_OVERDUE': TOTAL_BUREAU_CREDIT_DAY_OVERDUE,
-    'NUMBER_OF_PAST_APPS': NUMBER_OF_PAST_APPS,
-    'PREVIOUS_REFUSED_RATIO': PREVIOUS_REFUSED_RATIO,
-    'YEARS_EMPLOYED': YEARS_EMPLOYED,
-    'EXT_SOURCE_MEAN': EXT_SOURCE_MEAN,
-    'AGE': AGE,
-    'CNT_CHILDREN': CNT_CHILDREN}
-  
-X_input=pd.DataFrame([list(input_data.values())], columns=feature_names) 
-
-prediction = calibrated_model.predict(X_input)
-prob = calibrated_model.predict_proba(X_input)[:, 1][0]
-    
-st.subheader("Probability of Default")
-st.metric(label="Score", value=f"{prob:.2%}")
-    
-if prob < 0.32:
-        st.success(f"Low Risk: {prob:.2%} chance of default")
-        decision = "APPROVED"
-elif prob < 0.4 :
-        st.success(f"Low Risk: {prob:.2%} chance of default")
-        decision = "Credit profile looks better. Manual verification is reccomended"
-else:
-        st.error(f"High Risk: {prob:.2%} chance of default")
-        decision = "REJECTED"
-    
-st.write(f"**The loan is {decision}**")
-
-    # SHAP plot code here...
 
     # --- DOWNLOAD BUTTON - MUST BE INSIDE THE IF BLOCK ---
 report_data = {
