@@ -2,6 +2,7 @@
 
 An end-to-end machine learning project and an explainable AI web app that predicts the likelihood of loan default using classification models (Logistic Regression and XGBoost) and explains decisions with SHAP. Built for credit risk assessment and SARB compliance
 
+---
 
 **Live Demo:** https://loan-default-risk-predictions-project-ncmzz9wdzpvxhrhxhnrpms.streamlit.app
 
@@ -23,26 +24,28 @@ The goal is transparency. Every decline can be explained to the applicant and re
 - **Download Report**: Export prediction + input data as CSV
 - **SARB Compliance Focus**: Provides reasons for decline
 
+---
+
 ## 🛠️ Tech Stack
 - **Language**: Python 3.x
 - **Libraries**: pandas, numpy, scikit-learn, matplotlib, seaborn, Logistic Regression, XGBoost and SHAP
 - **App**: Streamlit
 - **Notebooks**: Jupyter
-
+---
 
 ### **How to Run Locally**
 1. Clone the repo
 ```bash```
 git clone https://github.com/luvhengork-design/Loan-Default-Risk-Predictions-Project.git
 cd Loan-Default-Risk-Predictions-Project
-
+---
 
 ### **How to use**
 1. Enter applicant financial details in the sidebar
 2. Click `Score` to get probability + decision
 3. Review the SHAP plot to see top risk drivers
 4. Download the result as CSV
-
+---
 
 ### **Screenshots**
 ![App UI](assets/app_screenshot.png)
