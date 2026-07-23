@@ -192,7 +192,7 @@ if st.button("Predict Risk"):
     'YEARS_EMPLOYED': YEARS_EMPLOYED,
     'EXT_SOURCE_MEAN': EXT_SOURCE_MEAN,
     'AGE': AGE,
-    'CNT_CHILDREN': CNT_CHILDREN
+    'CNT_CHILDREN': CNT_CHILDREN}
   
 X_input=pd.DataFrame([list(input_data.values())], columns=feature_names) 
 
