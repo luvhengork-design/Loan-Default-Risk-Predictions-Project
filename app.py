@@ -159,6 +159,28 @@ if st.button("Score"):
         delta="-Low Risk" if prob < Threshold  else "High Risk",
         delta_color="inverse" if prob < Threshold else "normal")
 
+    if prob < THRESHOLD:
+    st.success(f"Low Risk: {prob:.2%} chance of default")
+    st.success("The loan is APPROVED")
+    decision = "APPROVED"  # <-- ADD THIS
+elif prob < 0.4:
+    st.warning(f"Medium Risk: {prob:.2%} chance of default")
+    st.info("Credit profile looks good. Manual verification recommended")
+    decision = "REVIEW"    # <-- ADD THIS
+else:
+    st.error(f"High Risk: {prob:.2%} chance of default")
+    st.error("The loan is REJECTED")
+    decision = "REJECTED"  # <-- ADD THIS
+
+# NOW your download button will work
+csv = report_df.to_csv(index=False)
+st.download_button(
+    label="📥 Download Prediction",
+    data=csv,
+    file_name=f"loan_prediction_{decision}_{prob:.0%}.csv",
+    mime="text/csv"
+)
+
     if prob < Threshold:
         st.success(f"Low Risk: {prob:.2%} chance of default")
         decision = "APPROVED"
