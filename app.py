@@ -199,8 +199,8 @@ X_input=pd.DataFrame([list(input_data.values())], columns=feature_names)
 prediction = calibrated_model.predict(X_input)
 prob = calibrated_model.predict_proba(X_input)[:, 1][0]
     
-    st.subheader("Probability of Default")
-    st.metric(label="Score", value=f"{prob:.2%}")
+st.subheader("Probability of Default")
+st.metric(label="Score", value=f"{prob:.2%}")
     
     if prob < 0.32:
         st.error(f"High Risk: {prob:.2%} chance of default")
