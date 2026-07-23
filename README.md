@@ -62,7 +62,7 @@ cd Loan-Default-Risk-Predictions-Project
 
 ### **Author**
 Built by Rotshila Luvhengo  
-LinkedIn: [Rotshila Luvhengo](https://Linkedin.com/in/rotshilaluvhengo-438ab138a) | GitHub: [luvhengork-design](https://github.com/luvhengork-design)
+LinkedIn: [Rotshila Luvhengo](https://www.linkedin.com/in/rotshilaluvhengo-438ab138a) | GitHub: [luvhengork-design](https://github.com/luvhengork-design)
 
 
 
