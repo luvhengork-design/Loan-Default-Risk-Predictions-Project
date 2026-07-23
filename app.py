@@ -168,12 +168,14 @@ if st.button("Score"):
         delta_color="inverse" if prob < Threshold else "normal")
     
     if prob<Threshold:
-        st.success("The loan is approved")
+        st.success(f"Low Risk: {prob:.2%} chance of default")
+        decision = "APPROVED"
     elif prob < 0.4:
-        st.success("Low risk of default. Credit profile looks good. Manual verification is recommended")
+        st.success(f"Low Risk: {prob:.2%} chance of default")
+        decision = "Credit profile looks better. Manual verification is reccomended"
     else:
-        st.error("High risk of default. Consider improving credit profile.")
-
+        st.error(f"High Risk: {prob:.2%} chance of default")
+        decision = "REJECTED"
     
 
     with st.expander("**Top reasons for score**"):
@@ -220,12 +222,10 @@ prob = calibrated_model.predict_proba(X_input)[:, 1][0]
 st.subheader("Probability of Default")
 st.metric(label="Score", value=f"{prob:.2%}")
     
-    if prob < 0.32:
-        st.success(f"Low Risk: {prob:.2%} chance of default")
-        decision = "APPROVED"
+if prob < 0.32:
+        
     elif prob < 0.4 :
-        st.success(f"Low Risk: {prob:.2%} chance of default")
-        decision = "Credit profile looks better. Manual verification is reccomended"
+        
     else:
         st.error(f"High Risk: {prob:.2%} chance of default")
         decision = "REJECTED"
