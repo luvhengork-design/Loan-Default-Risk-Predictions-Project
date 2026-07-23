@@ -178,7 +178,7 @@ if st.button("Score"):
     else:
         st.error(f"High Risk: {prob:.2%} chance of default")
         decision = "REJECTED"
-    with st.expander("**Top reasons for score**"):
+        with st.expander("**Top reasons for score**"):
         st.write("1. Low external source mean score")
         st.write("2. High DEBT TO INCOME RATIO")
         st.write("3. Low bureau score")
