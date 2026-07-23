@@ -29,21 +29,20 @@ The goal is transparency. Every decline can be explained to the applicant and re
 - **App**: Streamlit
 - **Notebooks**: Jupyter
 
----
 
 ### **How to Run Locally**
 1. Clone the repo
 ```bash
 git clone https://github.com/luvhengork-design/Loan-Default-Risk-Predictions-Project.git
 cd Loan-Default-Risk-Predictions-Project
-   
----
+
+
+### **How to use**
 1. Enter applicant financial details in the sidebar
 2. Click `Score` to get probability + decision
 3. Review the SHAP plot to see top risk drivers
 4. Download the result as CSV
 
----
 
 ### **Screenshots**
 ![App UI](assets/app_screenshot.png)
@@ -51,10 +50,11 @@ cd Loan-Default-Risk-Predictions-Project
 
 ---
 
-### **Model Details**
+### *Model Details*
 - **Models Used**: Logistic Regression and XGBoost with Calibration
 - **Decision Threshold**: 0.32
 - **Explainability**: SHAP for regulatory transparency
+
 ---
 
 ### **Author**
