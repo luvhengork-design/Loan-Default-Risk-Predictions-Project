@@ -179,6 +179,20 @@ if st.button("Score"):
 
     
 if st.button("Predict Risk"):
+feature_names = [
+    'DTI_RATIO', 
+    'CREDIT_TO_INCOME_RATIO', 
+    'BUREAU_DAYS_CREDIT_MIN', 
+    'BUREAU_DAYS_CREDIT_MAX',
+    'BUREAU_CREDIT_ACTIVE', 
+    'TOTAL_BUREAU_CREDIT_DAY_OVERDUE', 
+    'NUMBER_OF_PAST_APPS',
+    'PREVIOUS_REFUSED_RATIO', 
+    'YEARS_EMPLOYED', 
+    'EXT_SOURCE_MEAN', 
+    'AGE', 
+    'CNT_CHILDREN'
+]
     
     input_data = {
     'DTI_RATIO': DTI_RATIO,
