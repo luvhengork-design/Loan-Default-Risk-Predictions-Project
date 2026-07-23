@@ -175,6 +175,24 @@ if st.button("Score"):
         st.error("The loan is REJECTED")
         decision = "REJECTED"
 
+    input_data = {
+        'DTI_RATIO': DTI_RATIO,
+        'CREDIT_TO_INCOME_RATIO': CREDIT_TO_INCOME_RATIO,
+        'BUREAU_DAYS_CREDIT_MIN': BUREAU_DAYS_CREDIT_MIN,
+        'BUREAU_DAYS_CREDIT_MAX': BUREAU_DAYS_CREDIT_MAX,
+        'BUREAU_CREDIT_ACTIVE': BUREAU_CREDIT_ACTIVE,
+        'TOTAL_BUREAU_CREDIT_DAY_OVERDUE': TOTAL_BUREAU_CREDIT_DAY_OVERDUE,
+        'NUMBER_OF_PAST_APPS': NUMBER_OF_PAST_APPS,
+        'PREVIOUS_REFUSED_RATIO': PREVIOUS_REFUSED_RATIO,
+        'YEARS_EMPLOYED': YEARS_EMPLOYED,
+        'EXT_SOURCE_MEAN': EXT_SOURCE_MEAN,
+        'AGE': AGE,
+        'CNT_CHILDREN': CNT_CHILDREN,
+        'PROBABILITY_OF_DEFAULT': prob,
+        'DECISION': decision
+    }
+    report_df = pd.DataFrame([input_data])
+
     # THIS MUST BE INDENTED THE SAME AS THE IF/ELIF/ELSE ABOVE
     csv = report_df.to_csv(index=False)
     st.download_button(
