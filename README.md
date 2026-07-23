@@ -32,7 +32,7 @@ The goal is transparency. Every decline can be explained to the applicant and re
 
 ### **How to Run Locally**
 1. Clone the repo
-```bash
+```bash```
 git clone https://github.com/luvhengork-design/Loan-Default-Risk-Predictions-Project.git
 cd Loan-Default-Risk-Predictions-Project
 
