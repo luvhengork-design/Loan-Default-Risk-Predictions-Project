@@ -160,7 +160,10 @@ if st.button("Score"):
           BUREAU_CREDIT_ACTIVE, TOTAL_BUREAU_CREDIT_DAY_OVERDUE, NUMBER_OF_PAST_APPS,
           PREVIOUS_REFUSED_RATIO, YEARS_EMPLOYED, EXT_SOURCE_MEAN, AGE,CNT_CHILDREN]])[0,1]
     
-    st.metric(label="Probability of Default", value=f"{prob:.2%}", ...)
+    st.metric(label="Probability of Default",
+        value=f"{prob:.2%}",
+        delta="-Low Risk" if prob < Threshold  else "High Risk",
+        delta_color="inverse" if prob < Threshold else "normal"))
     
     if prob < Threshold:
         st.success("The loan is APPROVED")
