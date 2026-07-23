@@ -181,13 +181,13 @@ st.download_button(
     mime="text/csv"
 )
 
-    if prob < Threshold:
+if prob < Threshold:
         st.success(f"Low Risk: {prob:.2%} chance of default")
         decision = "APPROVED"
-    elif prob < 0.4 :
+elif prob < 0.4 :
         st.success(f"Low Risk: {prob:.2%} chance of default")
         decision = "Credit profile looks better. Manual verification is reccomended"
-    else:
+else:
         st.error(f"High Risk: {prob:.2%} chance of default")
         decision = "REJECTED"
         with st.expander("**Top reasons for score**"):
@@ -196,4 +196,4 @@ st.download_button(
             st.write("3. Low bureau score")
             st.write("4. Unstable employment")
 
-    st.write(f"**The loan is {decision}**")
+st.write(f"**The loan is {decision}**")
