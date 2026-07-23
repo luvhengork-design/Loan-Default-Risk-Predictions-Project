@@ -203,13 +203,13 @@ st.subheader("Probability of Default")
 st.metric(label="Score", value=f"{prob:.2%}")
     
 if prob < 0.32:
-        st.error(f"High Risk: {prob:.2%} chance of default")
+        st.success(f"Low Risk: {prob:.2%} chance of default")
         decision = "APPROVED"
 elif prob < 0.4 :
         st.success(f"Low Risk: {prob:.2%} chance of default")
         decision = "Credit profile looks better. Manual verification is reccomended"
 else:
-        st.success(f"Low Risk: {prob:.2%} chance of default")
+        st.error(f"High Risk: {prob:.2%} chance of default")
         decision = "REJECTED"
     
     st.write(f"**The loan is {decision}**")
