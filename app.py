@@ -153,8 +153,11 @@ except Exception as e:
 #   st.warning(f"SHAP plot skipped: {e}")
 #plt.clf()
 
+
 if st.button("Score"):
     Threshold=0.32
+
+    
     prob=calibrated_model.predict_proba([[DTI_RATIO,CREDIT_TO_INCOME_RATIO, BUREAU_DAYS_CREDIT_MIN, BUREAU_DAYS_CREDIT_MAX,
           BUREAU_CREDIT_ACTIVE, TOTAL_BUREAU_CREDIT_DAY_OVERDUE, NUMBER_OF_PAST_APPS,
           PREVIOUS_REFUSED_RATIO, YEARS_EMPLOYED, EXT_SOURCE_MEAN, AGE,CNT_CHILDREN]])[0,1]
@@ -170,6 +173,8 @@ if st.button("Score"):
         st.success("Low risk of default. Credit profile looks good. Manual verification is recommended")
     else:
         st.error("High risk of default. Consider improving credit profile.")
+
+    
 
     with st.expander("**Top reasons for score**"):
         st.write("1. Low external source mean score")
@@ -215,13 +220,13 @@ prob = calibrated_model.predict_proba(X_input)[:, 1][0]
 st.subheader("Probability of Default")
 st.metric(label="Score", value=f"{prob:.2%}")
     
-if prob < 0.32:
+    if prob < 0.32:
         st.success(f"Low Risk: {prob:.2%} chance of default")
         decision = "APPROVED"
-elif prob < 0.4 :
+    elif prob < 0.4 :
         st.success(f"Low Risk: {prob:.2%} chance of default")
         decision = "Credit profile looks better. Manual verification is reccomended"
-else:
+    else:
         st.error(f"High Risk: {prob:.2%} chance of default")
         decision = "REJECTED"
     
