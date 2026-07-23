@@ -153,7 +153,7 @@ if st.button("Score"):
 prob=calibrated_model.predict_proba([[DTI_RATIO,CREDIT_TO_INCOME_RATIO, BUREAU_DAYS_CREDIT_MIN, BUREAU_DAYS_CREDIT_MAX,
           BUREAU_CREDIT_ACTIVE, TOTAL_BUREAU_CREDIT_DAY_OVERDUE, NUMBER_OF_PAST_APPS,
           PREVIOUS_REFUSED_RATIO, YEARS_EMPLOYED, EXT_SOURCE_MEAN, AGE,CNT_CHILDREN]])[0,1]
-    st.metric(
+st.metric(
         label="Probability of Default",
         value=f"{prob:.2%}",
         delta="-Low Risk" if prob < Threshold  else "High Risk",
