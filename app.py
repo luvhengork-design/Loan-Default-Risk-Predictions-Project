@@ -212,7 +212,7 @@ else:
         st.error(f"High Risk: {prob:.2%} chance of default")
         decision = "REJECTED"
     
-    st.write(f"**The loan is {decision}**")
+st.write(f"**The loan is {decision}**")
 
     # SHAP plot code here...
 
