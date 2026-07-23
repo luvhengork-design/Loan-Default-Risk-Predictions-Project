@@ -176,14 +176,12 @@ if st.button("Score"):
     else:
         st.error(f"High Risk: {prob:.2%} chance of default")
         decision = "REJECTED"
-    
-
     with st.expander("**Top reasons for score**"):
         st.write("1. Low external source mean score")
         st.write("2. High DEBT TO INCOME RATIO")
         st.write("3. Low bureau score")
         st.write("4. Unstable employment")
-
+    st.write(f"**The loan is {decision}**")
     
 if st.button("Predict Risk"):
     feature_names = [
@@ -222,15 +220,8 @@ prob = calibrated_model.predict_proba(X_input)[:, 1][0]
 st.subheader("Probability of Default")
 st.metric(label="Score", value=f"{prob:.2%}")
     
-if prob < 0.32:
-        
-    elif prob < 0.4 :
-        
-    else:
-        st.error(f"High Risk: {prob:.2%} chance of default")
-        decision = "REJECTED"
     
-st.write(f"**The loan is {decision}**")
+
 
     # SHAP plot code here...
 
