@@ -165,9 +165,10 @@ if st.button("Score"):
         delta_color="inverse" if prob < Threshold else "normal")
 
    
-     if prob<Threshold:
+if prob<Threshold:
+
         st.success("The loan is approved")
-    elif prob<0.4:
+    elif prob<0.3:
         st.success("Low risk of default. Credit profile looks good. Manual verification is reccomended")
         
         with st.expander("**Top reasons for score**"):
@@ -177,8 +178,7 @@ if st.button("Score"):
             st.write("4. Unstable employment")
     else:
         st.error("High risk of default. Consider improving credit profile.")
-
-
+    
 if st.button("Predict Risk"):
     X_input = pd.DataFrame([input_data], columns=feature_names)
     
