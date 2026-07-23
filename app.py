@@ -177,7 +177,7 @@ if st.button("Score"):
         decision = "Credit profile looks better. Manual verification is reccomended"
     else:
         st.error(f"High Risk: {prob:.2%} chance of default")
-    decision = "REJECTED"
+        decision = "REJECTED"
     with st.expander("**Top reasons for score**"):
         st.write("1. Low external source mean score")
         st.write("2. High DEBT TO INCOME RATIO")
