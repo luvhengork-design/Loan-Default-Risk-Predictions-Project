@@ -158,20 +158,24 @@ if st.button("Score"):
         value=f"{prob:.2%}",
         delta="-Low Risk" if prob < Threshold  else "High Risk",
         delta_color="inverse" if prob < Threshold else "normal")
-    
-    if prob<Threshold:
-        st.success("The loan is approved")
-    elif prob < 0.4:
-        st.success("Low risk of default. Credit profile looks good. Manual verification is recommended")
-    else:
-        st.error("High risk of default. Consider improving credit profile.")
 
+    if prob < Threshold:
+        st.success(f"Low Risk: {prob:.2%} chance of default")
+        decision = "APPROVED"
+    elif prob < 0.4 :
+        st.success(f"Low Risk: {prob:.2%} chance of default")
+        decision = "Credit profile looks better. Manual verification is reccomended"
+    else:
+        st.error(f"High Risk: {prob:.2%} chance of default")
+        decision = "REJECTED"
         with st.expander("**Top reasons for score**"):
             st.write("1. Low external source mean score")
             st.write("2. High DEBT TO INCOME RATIO")
             st.write("3. Low bureau score")
             st.write("4. Unstable employment")
 
+st.write(f"**The loan is {decision}**")
+        
 input_data = {
     'DTI_RATIO': DTI_RATIO,
     'CREDIT_TO_INCOME_RATIO': CREDIT_TO_INCOME_RATIO,
