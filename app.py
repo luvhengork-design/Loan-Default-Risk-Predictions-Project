@@ -217,14 +217,14 @@ st.write(f"**The loan is {decision}**")
     # SHAP plot code here...
 
     # --- DOWNLOAD BUTTON - MUST BE INSIDE THE IF BLOCK ---
-    report_data = {
+report_data = {
         "Feature": list(input_data.keys()),
         "Value": list(input_data.values())
     }
-    report_df = pd.DataFrame(report_data)
+report_df = pd.DataFrame(report_data)
 
-    csv = report_df.to_csv(index=False).encode('utf-8')
-    st.download_button(
+csv = report_df.to_csv(index=False).encode('utf-8')
+st.download_button(
         label="📥 Download Prediction Report as CSV",
         data=csv,
         file_name=f"loan_prediction_{decision}_{prob:.0%}.csv",
