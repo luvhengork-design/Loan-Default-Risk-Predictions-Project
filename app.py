@@ -202,7 +202,7 @@ prob = calibrated_model.predict_proba(X_input)[:, 1][0]
 st.subheader("Probability of Default")
 st.metric(label="Score", value=f"{prob:.2%}")
     
-    if prob < 0.32:
+if prob < 0.32:
         st.error(f"High Risk: {prob:.2%} chance of default")
         decision = "APPROVED"
     elif prob < 0.4 :
