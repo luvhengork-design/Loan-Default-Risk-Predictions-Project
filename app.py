@@ -168,7 +168,7 @@ if st.button("Score"):
 if prob<Threshold:
 
         st.success("The loan is approved")
-    elif prob<0.3:
+    elif prob<0.4:
         st.success("Low risk of default. Credit profile looks good. Manual verification is reccomended")
         
         with st.expander("**Top reasons for score**"):
