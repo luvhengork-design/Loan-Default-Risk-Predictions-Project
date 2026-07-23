@@ -163,7 +163,7 @@ if st.button("Score"):
     st.metric(label="Probability of Default",
         value=f"{prob:.2%}",
         delta="-Low Risk" if prob < Threshold  else "High Risk",
-        delta_color="inverse" if prob < Threshold else "normal"))
+        delta_color="inverse" if prob < Threshold else "normal")
     
     if prob < Threshold:
         st.success("The loan is APPROVED")
