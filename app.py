@@ -165,7 +165,7 @@ if st.button("Score"):
         delta_color="inverse" if prob < Threshold else "normal")
 
    
-if prob<Threshold:
+if prob<threshold:
         st.success("The loan is approved")
 elif prob<0.4:
         st.success("Low risk of default. Credit profile looks good. Manual verification is reccomended")
