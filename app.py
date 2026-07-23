@@ -155,64 +155,28 @@ except Exception as e:
 
 
 if st.button("Score"):
-    Threshold=0.32
-
-    
-    prob=calibrated_model.predict_proba([[DTI_RATIO,CREDIT_TO_INCOME_RATIO, BUREAU_DAYS_CREDIT_MIN, BUREAU_DAYS_CREDIT_MAX,
+    Threshold = 0.32
+    prob = calibrated_model.predict_proba([[DTI_RATIO,CREDIT_TO_INCOME_RATIO, BUREAU_DAYS_CREDIT_MIN, BUREAU_DAYS_CREDIT_MAX,
           BUREAU_CREDIT_ACTIVE, TOTAL_BUREAU_CREDIT_DAY_OVERDUE, NUMBER_OF_PAST_APPS,
           PREVIOUS_REFUSED_RATIO, YEARS_EMPLOYED, EXT_SOURCE_MEAN, AGE,CNT_CHILDREN]])[0,1]
-
-    st.subheader("Probability of Default")
-    st.metric(
-        label="score",
-        value=f"{prob:.2%}",
-        delta="-Low Risk" if prob < Threshold  else "High Risk",
-        delta_color="inverse" if prob < Threshold else "normal")
     
-    if prob<Threshold:
-        st.success(f"Low Risk: {prob:.2%} chance of default")
+    st.metric(label="Probability of Default", value=f"{prob:.2%}", ...)
+    
+    if prob < Threshold:
+        st.success("The loan is APPROVED")
         decision = "APPROVED"
     elif prob < 0.4:
-        st.success(f"Low Risk: {prob:.2%} chance of default")
-        decision = "Credit profile looks better. Manual verification is reccomended"
+        st.warning("Manual verification recommended")
+        decision = "REVIEW"
     else:
-        st.error(f"High Risk: {prob:.2%} chance of default")
+        st.error("The loan is REJECTED")
         decision = "REJECTED"
-        with st.expander("**Top reasons for score**"):
-            st.write("1. Low external source mean score")
-            st.write("2. High DEBT TO INCOME RATIO")
-            st.write("3. Low bureau score")
-            st.write("4. Unstable employment")
-    st.write(f"**The loan is {decision}**")
-    
-input_data = {
-    'DTI_RATIO': DTI_RATIO,
-    'CREDIT_TO_INCOME_RATIO': CREDIT_TO_INCOME_RATIO,
-    'BUREAU_DAYS_CREDIT_MIN': BUREAU_DAYS_CREDIT_MIN,
-    'BUREAU_DAYS_CREDIT_MAX': BUREAU_DAYS_CREDIT_MAX,
-    'BUREAU_CREDIT_ACTIVE': BUREAU_CREDIT_ACTIVE,
-    'TOTAL_BUREAU_CREDIT_DAY_OVERDUE': TOTAL_BUREAU_CREDIT_DAY_OVERDUE,
-    'NUMBER_OF_PAST_APPS': NUMBER_OF_PAST_APPS,
-    'PREVIOUS_REFUSED_RATIO': PREVIOUS_REFUSED_RATIO,
-    'YEARS_EMPLOYED': YEARS_EMPLOYED,
-    'EXT_SOURCE_MEAN': EXT_SOURCE_MEAN,
-    'AGE': AGE,
-    'CNT_CHILDREN': CNT_CHILDREN}
-   
 
-    # SHAP plot code here...
-
-    # --- DOWNLOAD BUTTON - MUST BE INSIDE THE IF BLOCK ---
-report_data = {
-        "Feature": list(input_data.keys()),
-        "Value": list(input_data.values())
-    }
-report_df = pd.DataFrame(report_data)
-
-csv = report_df.to_csv(index=False).encode('utf-8')
+    # THIS MUST BE INDENTED THE SAME AS THE IF/ELIF/ELSE ABOVE
+    csv = report_df.to_csv(index=False)
     st.download_button(
-        label="📥 Download Prediction Report as CSV",
+        label="📥 Download Prediction",
         data=csv,
-    file_name=f"loan_prediction_{decision}_{prob:.0%}.csv",
-        mime='text/csv'
+        file_name=f"loan_prediction_{decision}_{prob:.0%}.csv",
+        mime="text/csv"
     )
