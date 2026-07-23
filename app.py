@@ -176,6 +176,12 @@ if st.button("Score"):
         st.write("2. High DEBT TO INCOME RATIO")
         st.write("3. Low bureau score")
         st.write("4. Unstable employment")
+
+input_data = [
+    DTI_RATIO, CREDIT_TO_INCOME_RATIO, BUREAU_DAYS_CREDIT_MIN, BUREAU_DAYS_CREDIT_ENDDATE,
+    BUREAU_CREDIT_ACTIVE, TOTAL_BUREAU_CREDIT_DAY_OVERDUE, NUMBER_OF_PAST_APPS,
+    PREVIOUS_REFUSED_RATIO, YEARS_EMPLOYED, EXT_SOURCE_MEAN, AGE, CNT_CHILDREN]
+
     
 if st.button("Predict Risk"):
     X_input = pd.DataFrame([input_data], columns=feature_names)
