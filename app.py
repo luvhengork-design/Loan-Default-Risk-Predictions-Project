@@ -171,10 +171,10 @@ if st.button("Score"):
     
     if prob<Threshold:
         st.success(f"Low Risk: {prob:.2%} chance of default")
-    decision = "APPROVED"
+        decision = "APPROVED"
     elif prob < 0.4:
         st.success(f"Low Risk: {prob:.2%} chance of default")
-    decision = "Credit profile looks better. Manual verification is reccomended"
+        decision = "Credit profile looks better. Manual verification is reccomended"
     else:
         st.error(f"High Risk: {prob:.2%} chance of default")
     decision = "REJECTED"
