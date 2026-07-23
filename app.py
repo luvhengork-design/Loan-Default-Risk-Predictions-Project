@@ -183,7 +183,7 @@ if st.button("Score"):
             st.write("2. High DEBT TO INCOME RATIO")
             st.write("3. Low bureau score")
             st.write("4. Unstable employment")
-        st.write(f"**The loan is {decision}**")
+    st.write(f"**The loan is {decision}**")
     
 input_data = {
     'DTI_RATIO': DTI_RATIO,
