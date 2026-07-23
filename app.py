@@ -194,7 +194,7 @@ feature_names = [
     'CNT_CHILDREN'
 ]
     
-    input_data = {
+input_data = {
     'DTI_RATIO': DTI_RATIO,
     'CREDIT_TO_INCOME_RATIO': CREDIT_TO_INCOME_RATIO,
     'BUREAU_DAYS_CREDIT_MIN': BUREAU_DAYS_CREDIT_MIN,
