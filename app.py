@@ -171,11 +171,11 @@ if st.button("Score"):
     else:
         st.error("High risk of default. Consider improving credit profile.")
 
-    with st.expander("**Top reasons for score**"):
-        st.write("1. Low external source mean score")
-        st.write("2. High DEBT TO INCOME RATIO")
-        st.write("3. Low bureau score")
-        st.write("4. Unstable employment")
+        with st.expander("**Top reasons for score**"):
+            st.write("1. Low external source mean score")
+            st.write("2. High DEBT TO INCOME RATIO")
+            st.write("3. Low bureau score")
+            st.write("4. Unstable employment")
 
     
 if st.button("Predict Risk"):
