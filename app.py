@@ -179,7 +179,7 @@ if st.button("Score"):
 
     
 if st.button("Predict Risk"):
-feature_names = [
+    feature_names = [
     'DTI_RATIO', 
     'CREDIT_TO_INCOME_RATIO', 
     'BUREAU_DAYS_CREDIT_MIN', 
@@ -193,7 +193,6 @@ feature_names = [
     'AGE', 
     'CNT_CHILDREN'
 ]
-    
 input_data = {
     'DTI_RATIO': DTI_RATIO,
     'CREDIT_TO_INCOME_RATIO': CREDIT_TO_INCOME_RATIO,
