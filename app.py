@@ -159,7 +159,7 @@ if st.button("Score"):
         delta="-Low Risk" if prob < Threshold  else "High Risk",
         delta_color="inverse" if prob < Threshold else "normal")
 
-    if prob < THRESHOLD:
+if prob < Threshold:
     st.success(f"Low Risk: {prob:.2%} chance of default")
     st.success("The loan is APPROVED")
     decision = "APPROVED"  # <-- ADD THIS
