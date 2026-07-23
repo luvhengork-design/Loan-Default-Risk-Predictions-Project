@@ -4,12 +4,27 @@ import shap
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from io import BytesIO
 import warnings
 warnings.filterwarnings('ignore')
 
+st.set_page_config(
+    page_title="Loan Default Risk Predictor",
+    page_icon="💳",
+    layout="wide"
+)
+
+st.title("💳 Loan Default Risk Predictor")
+st.markdown("An XGBoost model to predict the likelihood of loan default. Built for credit risk assessment.")
+st.divider()
 
 st.title("Credit Default Risk scorer")
 st.markdown("### Enter application details. Model explains decline reasons for SARB compliance.")
+
+with st.sidebar:
+    st.image("https://cdn-icons-png.flaticon.com/512/2721/2721622.png", width=100) # bank icon
+    st.markdown("### About")
+    st.write("This app uses an XGBoost model trained on loan data to predict default risk and explain the top factors using SHAP.")
 
 st.markdown('#### Income')
 INCOME1= st.number_input('Primary Annual income', min_value=0.01, max_value=50000000.00, step=5000.0)
@@ -163,5 +178,20 @@ if st.button("Score"):
             st.write("4. Unstable employment")
     else:
         st.error("High risk of default. Consider improving credit profile.")
+
+# Create downloadable report
+report_data = {
+    "Feature": list(input_data.keys()),
+    "Value": list(input_data.values())
+}
+report_df = pd.DataFrame(report_data)
+
+csv = report_df.to_csv(index=False).encode('utf-8')
+st.download_button(
+    label="📥 Download Prediction Report as CSV",
+    data=csv,
+    file_name=f"loan_prediction_{decision}.csv",
+    mime='text/csv'
+)
 
         
