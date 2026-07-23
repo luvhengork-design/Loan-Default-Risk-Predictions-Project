@@ -197,33 +197,3 @@ st.download_button(
             st.write("4. Unstable employment")
 
     st.write(f"**The loan is {decision}**")
-        
-input_data = {
-    'DTI_RATIO': DTI_RATIO,
-    'CREDIT_TO_INCOME_RATIO': CREDIT_TO_INCOME_RATIO,
-    'BUREAU_DAYS_CREDIT_MIN': BUREAU_DAYS_CREDIT_MIN,
-    'BUREAU_DAYS_CREDIT_MAX': BUREAU_DAYS_CREDIT_MAX,
-    'BUREAU_CREDIT_ACTIVE': BUREAU_CREDIT_ACTIVE,
-    'TOTAL_BUREAU_CREDIT_DAY_OVERDUE': TOTAL_BUREAU_CREDIT_DAY_OVERDUE,
-    'NUMBER_OF_PAST_APPS': NUMBER_OF_PAST_APPS,
-    'PREVIOUS_REFUSED_RATIO': PREVIOUS_REFUSED_RATIO,
-    'YEARS_EMPLOYED': YEARS_EMPLOYED,
-    'EXT_SOURCE_MEAN': EXT_SOURCE_MEAN,
-    'AGE': AGE,
-    'CNT_CHILDREN': CNT_CHILDREN}
-
-    # --- DOWNLOAD BUTTON - MUST BE INSIDE THE IF BLOCK ---
-report_data = {
-        "Feature": list(input_data.keys()),
-        "Value": list(input_data.values())
-    }
-report_df = pd.DataFrame(report_data)
-
-csv = report_df.to_csv(index=False).encode('utf-8')
-st.download_button(
-        label="📥 Download Prediction Report as CSV",
-        data=csv,
-        file_name=f"loan_prediction_{decision}_{prob:.0%}.csv",
-        mime='text/csv'
-    )
-        
