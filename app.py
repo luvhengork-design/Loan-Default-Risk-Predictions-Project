@@ -162,11 +162,10 @@ if st.button("Score"):
         label="Probability of Default",
         value=f"{prob:.2%}",
         delta="-Low Risk" if prob < Threshold  else "High Risk",
-        delta_color="inverse" if prob < Threshold else "normal"
-    )
+        delta_color="inverse" if prob < Threshold else "normal")
 
-    if prob<Threshold:
-
+   
+if prob<Threshold:
         st.success("The loan is approved")
     elif prob<0.4:
         st.success("Low risk of default. Credit profile looks good. Manual verification is reccomended")
@@ -179,19 +178,41 @@ if st.button("Score"):
     else:
         st.error("High risk of default. Consider improving credit profile.")
 
-# Create downloadable report
-report_data = {
-    "Feature": list(input_data.keys()),
-    "Value": list(input_data.values())
-}
-report_df = pd.DataFrame(report_data)
+if st.button("Predict Risk"):
+    X_input = pd.DataFrame([input_data], columns=feature_names)
+    
+    prediction = calibrated_model.predict(X_input)
+    prob = calibrated_model.predict_proba(X_input)[:, 1][0]
+    
+    st.subheader("Probability of Default")
+    st.metric(label="Score", value=f"{prob:.2%}")
+    
+    if prob < 0.32:
+        st.error(f"High Risk: {prob:.2%} chance of default")
+        decision = "APPROVED"
+    elif prob < 0.4 :
+        st.success(f"Low Risk: {prob:.2%} chance of default")
+        decision = "Credit profile looks better. Manual verification is reccomended"
+    else:
+        st.success(f"Low Risk: {prob:.2%} chance of default")
+        decision = "REJECTED"
+    
+    st.write(f"**The loan is {decision}**")
 
-csv = report_df.to_csv(index=False).encode('utf-8')
-st.download_button(
-    label="📥 Download Prediction Report as CSV",
-    data=csv,
-    file_name=f"loan_prediction_{decision}.csv",
-    mime='text/csv'
-)
+    # SHAP plot code here...
 
+    # --- DOWNLOAD BUTTON - MUST BE INSIDE THE IF BLOCK ---
+    report_data = {
+        "Feature": list(input_data.keys()),
+        "Value": list(input_data.values())
+    }
+    report_df = pd.DataFrame(report_data)
+
+    csv = report_df.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="📥 Download Prediction Report as CSV",
+        data=csv,
+        file_name=f"loan_prediction_{decision}_{prob:.0%}.csv",
+        mime='text/csv'
+    )
         
