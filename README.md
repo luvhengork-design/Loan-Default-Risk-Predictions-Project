@@ -3,7 +3,7 @@
 An end-to-end machine learning project and an explainable AI web app that predicts the likelihood of loan default using classification models (Logistic Regression and XGBoost) and explains decisions with SHAP. Built for credit risk assessment and SARB compliance
 
 
-**Live Demo:** https://loan-default-risk-predictions-project-ncmzz9wdzpvxhrhxhnrpms.streamlit.app/
+**Live Demo:** https://loan-default-risk-predictions-project-ncmzz9wdzpvxhrhxhnrpms.streamlit.app
 
 ## 📌 Project Overview
 This project analyzes loan applicant data to predict the risk of default. It includes data preprocessing, EDA, feature engineering, model training, and a deployment-ready app.
@@ -43,20 +43,23 @@ cd Loan-Default-Risk-Predictions-Project
 3. Review the SHAP plot to see top risk drivers
 4. Download the result as CSV
 
+---
+
 ### **Screenshots**
 ![App UI](assets/app_screenshot.png)
 ![App UI](assets/app2_screenshot.png)
+
+---
 
 ### **Model Details**
 - **Models Used**: Logistic Regression and XGBoost with Calibration
 - **Decision Threshold**: 0.32
 - **Explainability**: SHAP for regulatory transparency
+---
 
 ### **Author**
 Built by Rotshila Luvhengo  
 LinkedIn: [Rotshila Luvhengo](https://Linkedin.com/in/rotshilaluvhengo-438ab138a) | GitHub: [luvhengork-design](https://github.com/luvhengork-design)
 
 
-```bash
-git clone https://github.com/[YOUR-NAME]/loan-default-risk-predictor.git
-cd loan-default-risk-predictor
+
