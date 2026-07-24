@@ -48,10 +48,10 @@ cd Loan-Default-Risk-Predictions-Project
 ---
 
 ### **Screenshots**
-![App UI](images/assets/app_screenshot.png)
-![App UI](images/assets/app2_screenshot.png)
-![App UI](images/Business_Impact/business_impact_for_Logistic_Regression.png)
-![App UI](images/Business_Impact/Business_impact_for_XGBoost.png)
+![App UI](images/Assets/app_screenshot.png)
+![App UI](images/Assets/app2_screenshot.png)
+![Business Impact LR](images/Business_Impact/business_impact_for_Logistic_Regression.png)
+![Business Impact XGBoost](images/Business_Impact/Business_impact_for_XGBoost.png)
 
 
 ---
