@@ -54,8 +54,8 @@ cd Loan-Default-Risk-Predictions-Project
 ![Business Impact XGBoost](images/Business_Impact/Business_impact_for_XGBoost.png)
 ![Cost Mininisation Function](images/Profit_curve/Cost_minimisation_threshold.png)
 ![Cost Maximisation Function](images/Profit_curve/Profit_miximisation_threshold.png)
-![SHAP plot For Explainability](images/Shap_plots/SHAP_plot_for_explainability.png)
-![SHAP waterfall plot for 1 Applicant 1](images/Shap_plots/SHAP_waterfall_plot_for_1_loan_applicant1.png)
+![SHAP plot For Explainability](images/Shap_plots/SHAP_plot_for_explainability.png.png)
+![SHAP waterfall plot for 1 Applicant 1](images/Shap_plots/SHAP_waterfall_plot_for_1_loan_applicant1.png.png)
 ![SHAP waterfall plot for 1 Applicant 2](images/Shap_plots/SHAP_waterfall_plot_for_1_loan_applicant2.png)
 
 ---
