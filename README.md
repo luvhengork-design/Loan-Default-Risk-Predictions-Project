@@ -52,7 +52,11 @@ cd Loan-Default-Risk-Predictions-Project
 ![App UI](images/Assets/app2_screenshot.png)
 ![Business Impact LR](images/Business_Impact/business_impact_for_Logistic_Regression.png)
 ![Business Impact XGBoost](images/Business_Impact/Business_impact_for_XGBoost.png)
-
+![Cost Mininisation Function](images/Profit_curve/Cost_minimisation_threshold.png)
+![Cost Maximisation Function](images/Profit_curve/Profit_miximisation_threshold.png)
+![SHAP plot For Explainability](images/Business_Impact/SHAP_plot_for_explainability.png)
+![SHAP waterfall plot for 1 Applicant 1](images/Shap_plots/SHAP_waterfall_plot_for_1_loan_applicant1.png)
+![SHAP waterfall plot for 1 Applicant 2](images/Shap_plots/SHAP_waterfall_plot_for_1_loan_applicant2.png)
 
 ---
 
